@@ -7,6 +7,27 @@ function quickSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
 
+  if (array.length<=1){
+  return array;
+  }
+  else
+  { 
+  var pivot = [(array[array.length-1])];
+  var arrayIzq = [];
+  var arrayDer = [];  
+
+  for (var i = 0; i < array.length - 1; i++) {
+    if (array[i]<pivot) {
+      arrayIzq.push(array[i]);
+    }
+    else
+    {
+      arrayDer.push(array[i]);
+    }  
+  }
+  return quickSort(arrayIzq).concat(pivot).concat(quickSort(arrayDer))
+ }
+
 }
 
 function mergeSort(array) {
