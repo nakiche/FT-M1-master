@@ -16,13 +16,23 @@ const {
 
 var countArray = function(array) {
     // Tu código aca:
-    
+    var total = 0
+    array.forEach(function(elemento){
+        if (Array.isArray(elemento)){
+            total += countArray(elemento)
+        }
+        else
+        {
+            total += elemento;     
+        }
+    })
+    return total;    
 }
 
 
 // Implementar la función countProps: a partir de un objeto en el cual cada propiedad puede contener
-// cualquier tipo de dato, determinar la cantidad de propiedades de objetos en cualquier nivel, ya sea el inicial
-// u objetos anidados
+// cualquier tipo de dato, determinar la cantidad de propiedades de objetos en cualquier nivel, 
+// ya sea el inicial u objetos anidados
 // Ejemplo:
 // var obj = {
 //   a: {
@@ -39,12 +49,22 @@ var countArray = function(array) {
 
 var countProps = function(obj) {
     // Tu código aca:
-
+    var count = 0;
+      //console.log(Object.keys(obj))
+    for (let clave in obj){
+    count ++   
+      if (typeof obj[clave] === 'object' && !Array.isArray(obj[clave]))
+        { 
+          count += countProps(obj[clave]);
+        }
+      }
+    return count;     
 }
 
 
 // Implementar el método changeNotNumbers dentro del prototype de LinkedList que deberá cambiar
-// aquellos valores que no puedan castearse a numeros por 'Kiricocho' y devolver la cantidad de cambios que hizo
+// aquellos valores que no puedan castearse a numeros por 'Kiricocho' y devolver la cantidad de 
+// cambios que hizo
 // Aclaracion: si el valor del nodo puede castearse a número NO hay que reemplazarlo
 // Ejemplo 1:
 //    Suponiendo que la lista actual es: Head --> [1] --> ['2'] --> [false] --> ['Franco']
@@ -53,7 +73,19 @@ var countProps = function(obj) {
 
 LinkedList.prototype.changeNotNumbers = function(){
     // Tu código aca:
+   var nodoActual = this.head;
+    var contador = 0;
 
+    while (nodoActual !== null) {
+        if(isNaN(Number(nodoActual.value))){
+      
+         nodoActual.value='Kiricocho';
+         contador++;
+        }
+     
+    nodoActual = nodoActual.next;
+    }
+  return contador;
 }
 
 
@@ -67,7 +99,14 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
+ var newQueue = new Queue();
 
+ while (queueOne.size()>0 || queueTwo.size()>0){
+    if (queueOne.size()>0) newQueue.enqueue(queueOne.dequeue())
+    if (queueTwo.size()>0) newQueue.enqueue(queueTwo.dequeue())
+ }
+
+ return newQueue;
 }
 
 
@@ -82,13 +121,28 @@ var mergeQueues = function(queueOne, queueTwo) {
 
 var closureMult = function(multiplier) {
     // Tu código aca:
-
+ return function(arg){
+    return arg*multiplier;
+ }
+ 
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
+
+    var total = this.value;
+   
+    if(this.left === null && this.right === null){return total;}
+
+    if(this.left === null){return total += this.right.sum();}
+
+    if(this.right === null){return total += this.left.sum();}
+    
+    return total += this.left.sum() + this.right.sum();
+
+
 
 }
 
